@@ -1,3 +1,4 @@
+// lib/features/adhkar/models/dhikr.dart
 class Dhikr {
   final int id;
   final String text;

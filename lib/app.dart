@@ -1,7 +1,8 @@
+// lib/app.dart
 import 'package:flutter/material.dart';
 
 import 'core/theme/app_theme.dart';
-import 'features/adhkar/presentation/pages/home_page.dart';
+import 'features/adhkar/presentation/pages/welcome_page.dart';
 
 class AdhkarApp extends StatelessWidget {
   const AdhkarApp({super.key});
@@ -20,7 +21,7 @@ class AdhkarApp extends StatelessWidget {
           child: child!,
         );
       },
-      home: const HomePage(),
+      home: const WelcomePage(),
     );
   }
 }

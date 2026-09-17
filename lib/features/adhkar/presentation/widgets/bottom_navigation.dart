@@ -1,3 +1,4 @@
+// lib/features/adhkar/presentation/widgets/bottom_navigation.dart
 import 'package:flutter/material.dart';
 
 class AdhkarBottomNavigation extends StatelessWidget {

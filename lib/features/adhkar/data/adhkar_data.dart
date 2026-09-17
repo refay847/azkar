@@ -1,3 +1,4 @@
+// lib/features/adhkar/data/adhkar_data.dart
 import '../models/dhikr.dart';
 
 const List<Dhikr> morningAdhkar = [
