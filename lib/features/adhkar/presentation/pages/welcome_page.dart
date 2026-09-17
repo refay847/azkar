@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_theme.dart';
 import 'home_page.dart';
+import 'after_prayer_page.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -17,6 +18,7 @@ class WelcomePage extends StatelessWidget {
       title: 'أذكار بعد الصلاة',
       subtitle: 'أذكار ما بعد الصلاة',
       icon: Icons.mosque_outlined,
+      available: true,
     ),
     _AdhkarCategory(
       title: 'أذكار الميت',
@@ -55,27 +57,23 @@ class WelcomePage extends StatelessWidget {
     ),
   ];
 
-  void _openCategory(
-    BuildContext context,
-    _AdhkarCategory category,
-  ) {
-    if (category.available) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => const HomePage(),
-        ),
-      );
-
+  void _openCategory(BuildContext context, _AdhkarCategory category) {
+    if (!category.available) {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (_) => const _ComingSoonPage()));
       return;
     }
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => const _ComingSoonPage(),
-      ),
-    );
+    if (category.title == 'أذكار الصباح والمساء') {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (_) => const HomePage()));
+      return;
+    }
+
+    if (category.title == 'أذكار بعد الصلاة') {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (_) => const AfterPrayerPage()));
+    }
   }
 
   @override
@@ -84,9 +82,7 @@ class WelcomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'أذكاري',
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w700),
         ),
       ),
 
@@ -97,9 +93,7 @@ class WelcomePage extends StatelessWidget {
             // Header
             SliverPadding(
               padding: const EdgeInsets.fromLTRB(16, 12, 16, 18),
-              sliver: SliverToBoxAdapter(
-                child: _WelcomeHeader(),
-              ),
+              sliver: SliverToBoxAdapter(child: _WelcomeHeader()),
             ),
 
             // Section title
@@ -139,8 +133,7 @@ class WelcomePage extends StatelessWidget {
               sliver: SliverGrid.builder(
                 itemCount: _categories.length,
 
-                gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
 
                   // Space between the two cards.
@@ -160,10 +153,7 @@ class WelcomePage extends StatelessWidget {
 
                   return _AdhkarCategoryCard(
                     category: category,
-                    onTap: () => _openCategory(
-                      context,
-                      category,
-                    ),
+                    onTap: () => _openCategory(context, category),
                   );
                 },
               ),
@@ -186,9 +176,7 @@ class _WelcomeHeader extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppTheme.surface,
         borderRadius: BorderRadius.circular(28),
-        border: Border.all(
-          color: AppTheme.primary.withValues(alpha: 0.13),
-        ),
+        border: Border.all(color: AppTheme.primary.withValues(alpha: 0.13)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.24),
@@ -253,10 +241,7 @@ class _AdhkarCategoryCard extends StatelessWidget {
   final _AdhkarCategory category;
   final VoidCallback onTap;
 
-  const _AdhkarCategoryCard({
-    required this.category,
-    required this.onTap,
-  });
+  const _AdhkarCategoryCard({required this.category, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -290,10 +275,7 @@ class _AdhkarCategoryCard extends StatelessWidget {
           ),
 
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 10,
-              vertical: 12,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
 
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -306,11 +288,7 @@ class _AdhkarCategoryCard extends StatelessWidget {
                     shape: BoxShape.circle,
                     color: AppTheme.primary.withValues(alpha: 0.09),
                   ),
-                  child: Icon(
-                    category.icon,
-                    color: AppTheme.primary,
-                    size: 24,
-                  ),
+                  child: Icon(category.icon, color: AppTheme.primary, size: 24),
                 ),
 
                 const SizedBox(height: 10),
@@ -351,9 +329,7 @@ class _AdhkarCategoryCard extends StatelessWidget {
                     const SizedBox(width: 4),
 
                     Text(
-                      category.available
-                          ? 'ابدأ'
-                          : 'قريبًا',
+                      category.available ? 'ابدأ' : 'قريبًا',
                       textDirection: TextDirection.rtl,
                       style: TextStyle(
                         color: category.available
@@ -383,9 +359,7 @@ class _ComingSoonPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'أذكاري',
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w700),
         ),
       ),
 
@@ -444,9 +418,7 @@ class _ComingSoonPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: const Icon(
-                  Icons.arrow_forward_rounded,
-                ),
+                icon: const Icon(Icons.arrow_forward_rounded),
                 label: const Text('العودة'),
               ),
             ],

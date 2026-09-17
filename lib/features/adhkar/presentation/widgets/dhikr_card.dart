@@ -2,10 +2,15 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_theme.dart';
-import '../../models/dhikr.dart';
 
+/// Shared card used by every adhkar screen (morning/evening, after-prayer, ...).
+///
+/// It intentionally takes plain values instead of a specific `Dhikr` model so
+/// that any adhkar model (which may have `virtue`, `note`, etc.) can render
+/// through this exact same widget and stay visually identical everywhere.
 class DhikrCard extends StatelessWidget {
-  final Dhikr dhikr;
+  final String text;
+  final String? note;
   final int remaining;
   final int currentIndex;
   final int total;
@@ -13,11 +18,12 @@ class DhikrCard extends StatelessWidget {
 
   const DhikrCard({
     super.key,
-    required this.dhikr,
+    required this.text,
     required this.remaining,
     required this.currentIndex,
     required this.total,
     required this.onTap,
+    this.note,
   });
 
   @override
@@ -105,7 +111,7 @@ class DhikrCard extends StatelessWidget {
                             child: Column(
                               children: [
                                 Text(
-                                  dhikr.text,
+                                  text,
                                   textAlign: TextAlign.center,
                                   textDirection: TextDirection.rtl,
                                   style: const TextStyle(
@@ -116,8 +122,7 @@ class DhikrCard extends StatelessWidget {
                                   ),
                                 ),
 
-                                if (dhikr.virtue != null &&
-                                    dhikr.virtue!.trim().isNotEmpty) ...[
+                                if (note != null && note!.trim().isNotEmpty) ...[
                                   const SizedBox(height: 24),
 
                                   Container(
@@ -135,7 +140,7 @@ class DhikrCard extends StatelessWidget {
                                       ),
                                     ),
                                     child: Text(
-                                      dhikr.virtue!,
+                                      note!,
                                       textAlign: TextAlign.center,
                                       textDirection: TextDirection.rtl,
                                       style: const TextStyle(
@@ -207,7 +212,7 @@ class DhikrCard extends StatelessWidget {
               ),
             ),
           ),
-          
+
           const SizedBox(height: 10),
 
           ClipRRect(

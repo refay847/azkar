@@ -359,7 +359,8 @@ class _HomePageState extends State<HomePage> {
               key: ValueKey(
                 '${_tabIndex}_$index',
               ),
-              dhikr: dhikr,
+              text: dhikr.text,
+              note: dhikr.virtue,
               remaining: _currentCounts[index],
               currentIndex: index,
               total: _currentAdhkar.length,
