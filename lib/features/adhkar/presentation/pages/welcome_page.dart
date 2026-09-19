@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_theme.dart';
 import 'home_page.dart';
 import 'after_prayer_page.dart';
+import 'sleep_page.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -21,14 +22,15 @@ class WelcomePage extends StatelessWidget {
       available: true,
     ),
     _AdhkarCategory(
-      title: 'أذكار الميت',
-      subtitle: 'الدعاء والأذكار للميت',
-      icon: Icons.volunteer_activism_outlined,
-    ),
-    _AdhkarCategory(
       title: 'أذكار النوم',
       subtitle: 'أذكار قبل النوم',
       icon: Icons.bedtime_outlined,
+      available: true,
+    ),
+    _AdhkarCategory(
+      title: 'أذكار الميت',
+      subtitle: 'الدعاء والأذكار للميت',
+      icon: Icons.volunteer_activism_outlined,
     ),
     _AdhkarCategory(
       title: 'أذكار الاستيقاظ',
@@ -73,6 +75,11 @@ class WelcomePage extends StatelessWidget {
     if (category.title == 'أذكار بعد الصلاة') {
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (_) => const AfterPrayerPage()));
+    }
+
+    if (category.title == 'أذكار النوم') {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (_) => const SleepPage()));
     }
   }
 
